@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" class="">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Akshay Kumar Sahu | Full Stack Developer</title>
+  <meta name="description" content="Full Stack Developer specializing in MERN stack applications">
+  <meta name="keywords" content="developer, full stack, web developer, react, node, mongodb, express">
+  <meta name="author" content="Akshay Kumar Sahu">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourportfolio.com/">
+  <meta property="og:title" content="Akshay Kumar Sahu | Full Stack Developer">
+  <meta property="og:description" content="Full Stack Developer specializing in MERN stack applications">
+  <meta property="og:image" content="https://yourportfolio.com/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourportfolio.com/">
+  <meta property="twitter:title" content="Akshay Kumar Sahu | Full Stack Developer">
+  <meta property="twitter:description" content="Full Stack Developer specializing in MERN stack applications">
+  <meta property="twitter:image" content="https://yourportfolio.com/og-image.jpg">
+
+  <!-- Inline script to apply dark/light theme before React loads -->
+  <script>
+    (function () {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+/* Custom cursor effect */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #64ffda;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transition: transform 0.15s ease;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Keyframe Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 400px;
+    }
+  }
+  
+  /* Utility Animation Classes */
+  .animate-fadeIn {
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  .animate-slideUp {
+    animation: slideUp 0.8s ease forwards;
+  }
+  
+  .animate-slideIn {
+    animation: slideIn 0.8s ease forwards;
+  }
+  
+  .animate-scaleIn {
+    animation: scaleIn 0.6s ease forwards;
+  }
+  
+  .animate-blink {
+    animation: blink 1s infinite;
+  }
+  
+  .animate-slideDown {
+    animation: slideDown 0.3s ease forwards;
+  }
+  
+  /* Animation delays */
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+  
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+  
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+  
+  /* Scroll-triggered animations */
+  .fade-on-scroll {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .fade-on-scroll.visible {
+    opacity: 1;
+  }
+  
+  .slide-up-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .slide-up-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Hover Effects */
+  .hover-lift {
+    transition: transform 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+  }
+  
+  /* Tailwind doesn't have these specific animations, so we're adding them */
+  @import "tailwindcss";
+  
+  @layer utilities {
+    .text-gradient {
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(to right, #64ffda, #6a98f0);
+    }
+  }
