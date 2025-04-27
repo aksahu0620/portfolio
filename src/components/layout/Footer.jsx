@@ -56,7 +56,7 @@ const Footer = () => {
               <Github size={20} />
             </a>
             <a 
-              href="https://www.linkedin.com/in/aksahu0620/" 
+              href="https://www.linkedin.com/in/aksahu0620" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2 rounded-full transition-colors duration-300"
