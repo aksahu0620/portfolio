@@ -1,8 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { applyThemeStyles, setThemeDirectly } from '../utils/themeUtils';
 
-const ThemeContext = createContext();
+// Create the theme context
+const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => {},
+});
 
+// Custom hook to use the theme context
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
@@ -11,41 +17,76 @@ export const useTheme = () => {
   return context;
 };
 
-export const ThemeProvider = ({ children }) => {
-  const getInitialTheme = () => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
-        return savedTheme;
-      }
-      
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
+// Function to get stored theme or set default
+const getStoredTheme = () => {
+  try {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark' || storedTheme === 'light') {
+      return storedTheme;
     }
-    
-    return 'dark';
-  };
+    // If no saved preference, check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light'; // Default fallback
+  } catch (err) {
+    console.error('Error reading theme from localStorage:', err);
+    return 'light'; // Safe fallback
+  }
+};
 
-  const [theme, setTheme] = useState(getInitialTheme);
-
+// Theme provider component
+export const ThemeProvider = ({ children }) => {
+  // Initialize with the saved theme from localStorage
+  const [theme, setTheme] = useState(getStoredTheme());
+  
+  // On mount, apply the theme immediately
   useEffect(() => {
-    const root = window.document.documentElement;
-    
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    
-    if (typeof window !== 'undefined') {
+    try {
+      // Apply theme immediately to prevent flash
+      const htmlElement = document.documentElement;
+      
+      // Remove both classes first
+      htmlElement.classList.remove('light', 'dark');
+      
+      // Add the current theme class
+      htmlElement.classList.add(theme);
+      
+      // Apply theme styles
+      applyThemeStyles(theme);
+      
+      // Save to localStorage for persistence
       localStorage.setItem('theme', theme);
+      
+      console.log(`Theme initialized to: ${theme}`);
+    } catch (err) {
+      console.error('Error applying initial theme:', err);
+    }
+  }, []);
+  
+  // Update the DOM and localStorage when theme changes
+  useEffect(() => {
+    try {
+      // Use setThemeDirectly to handle all DOM updates and localStorage
+      setThemeDirectly(theme);
+      
+      console.log('Theme updated to:', theme);
+    } catch (err) {
+      console.error('Error applying theme:', err);
     }
   }, [theme]);
-
+  
+  // Toggle the theme
   const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    console.log('Toggling theme from', theme);
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
   };
-
+  
+  // Value to provide to consumers
   const value = { theme, toggleTheme };
-
+  
   return (
     <ThemeContext.Provider value={value}>
       {children}
@@ -57,4 +98,5 @@ ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+// Export both the Provider and the Context
 export default ThemeContext;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import ThemeToggle from '../ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
 
 const navItems = [
@@ -14,8 +15,10 @@ const navItems = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  
+  // Handle scroll for header styling
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -34,9 +37,15 @@ const Header = () => {
     <header 
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white dark:bg-[#0a192f] py-3 shadow-md'
+          ? isDark ? 'bg-[#0a192f] py-3 shadow-md' : 'bg-white py-3 shadow-md'
           : 'bg-transparent py-5'
       }`}
+      style={{
+        backgroundColor: scrolled 
+          ? (isDark ? '#0a192f' : 'white') 
+          : 'transparent',
+        boxShadow: scrolled ? (isDark ? '0 4px 6px rgba(0, 0, 0, 0.5)' : '0 4px 6px rgba(0, 0, 0, 0.1)') : 'none'
+      }}
     >
       <div className="container mx-auto px-4 md:px-8">
         <nav className="flex items-center justify-between">
@@ -58,44 +67,26 @@ const Header = () => {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className={`font-medium transition-colors duration-300 hover:text-teal-400 ${
-                  scrolled
-                    ? 'text-gray-800 dark:text-gray-200'
-                    : 'text-gray-800 dark:text-gray-200'
-                }`}
+                className="font-medium transition-colors duration-300 hover:text-teal-400"
+                style={{
+                  color: isDark ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
+                }}
               >
                 {item.label}
               </a>
             ))}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-purple-600" />
-              )}
-            </button>
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Toggle */}
           <div className="flex items-center md:hidden">
-            <button
-              onClick={toggleTheme}
-              className="p-2 mr-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-purple-600" />
-              )}
-            </button>
+            <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-800 dark:text-white rounded-md focus:outline-none"
+              className="p-2 rounded-md focus:outline-none"
+              style={{
+                color: isDark ? 'white' : '#1a202c'
+              }}
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
@@ -110,7 +101,13 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-[#0a192f] shadow-lg animate-slideDown">
+        <div 
+          className="md:hidden shadow-lg animate-slideDown"
+          style={{
+            backgroundColor: isDark ? '#0a192f' : 'white',
+            boxShadow: isDark ? '0 4px 6px rgba(0, 0, 0, 0.5)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
+          }}
+        >
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
@@ -121,7 +118,11 @@ const Header = () => {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className="block py-2 px-4 text-gray-800 dark:text-white font-medium hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-300"
+                  className="block py-2 px-4 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-300"
+                  style={{
+                    color: isDark ? 'white' : '#1a202c',
+                    backgroundColor: 'transparent'
+                  }}
                 >
                   {item.label}
                 </a>

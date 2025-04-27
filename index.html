@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -25,22 +25,69 @@
   <meta property="twitter:description" content="Full Stack Developer specializing in MERN stack applications">
   <meta property="twitter:image" content="https://yourportfolio.com/og-image.jpg">
 
-  <!-- Inline script to apply dark/light theme before React loads -->
-  <script>
-    (function () {
-      const theme = localStorage.getItem('theme');
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.add('light');
-      }
-    })();
-  </script>
+  <style>
+    /* Critical CSS to ensure theme works before JS loads */
+    :root {
+      color-scheme: light dark;
+    }
+    
+    .dark {
+      color-scheme: dark;
+    }
+    
+    .light {
+      color-scheme: light;
+    }
+    
+    html.dark body {
+      background-color: #0a192f !important;
+      color: white !important;
+    }
+    
+    html.light body {
+      background-color: white !important;
+      color: #1a202c !important;
+    }
+  </style>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  
+  <!-- Inline script to apply dark/light theme after DOM is ready -->
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        // Check localStorage first
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Default to dark if user prefers dark mode and no preference saved
+        const isDark = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const theme = isDark ? 'dark' : 'light';
+        
+        // Apply to HTML class
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
+        
+        // Also apply direct styles to ensure visual feedback
+        if (isDark) {
+          document.documentElement.style.colorScheme = 'dark';
+          document.body.style.backgroundColor = '#0a192f';
+          document.body.style.color = 'white';
+        } else {
+          document.documentElement.style.colorScheme = 'light';
+          document.body.style.backgroundColor = 'white';
+          document.body.style.color = '#1a202c';
+        }
+        
+        console.log(`Initial theme set to ${theme} by inline script`);
+      } catch (e) {
+        console.error("Error setting initial theme:", e);
+      }
+    });
+  </script>
 </body>
 
 </html>
