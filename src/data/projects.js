@@ -5,7 +5,7 @@ export const projects = [
       description: 'A full-featured e-learning platform with payment integration, user authentication, and admin dashboard.',
       image: 'https://imgs.search.brave.com/FVJ_E2_4KJAtadGKh2zrfgUz2dXprLCsLXNPp-nZdBE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9lbGVhcm5pbmct/d2Vic2l0ZS13aXRo/LW1vZGlzaC1zb2Z3/YXJlLXN0dWRlbnQt/c3R1ZHktb25saW5l/LWludGVybmV0LW5l/dHdvcmtfMzE5NjUt/MjI3ODIzLmpwZz9z/ZW10PWFpc19oeWJy/aWQmdz03NDA',
       technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Redux', 'chadCn Ui'],
-      demoLink: 'https://e-learning-one-jade.vercel.app/',
+      demoLink: 'https://e-learning-three-puce.vercel.app/',
       githubLink: 'https://github.com/aksahu0620/E-Learning',
       featured: true,
     },
