@@ -58,8 +58,7 @@ const About = () => {
               </h4>
               <ul className="grid grid-cols-2 gap-x-3 gap-y-1">
                 {[
-                  'React', 'Node.js', 'MongoDB', 'MySQL', 'Express',
-                  'TypeScript', 'RESTful APIs', 'Responsive Design'
+                  'React', 'Node.js', 'MongoDB', 'MySQL', 'Express', 'RESTful APIs', 'Responsive Design'
                 ].map((skill) => (
                   <li key={skill} className="flex items-center text-gray-600 dark:text-gray-400">
                     <span className="mr-1 text-teal-400">•</span> {skill}
